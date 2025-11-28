@@ -22,24 +22,36 @@ onMounted(() => {
   }, 600)
 })
 
+// Clock hands
 const hourDeg = ref(0)
 const minuteDeg = ref(0)
 const secondDeg = ref(0)
 
-// Returns Namibia time
+// Get Namibia time reliably
 const getNamibiaTime = () => {
   const now = new Date()
-  const namibiaString = now.toLocaleString("en-US", { timeZone: "Africa/Windhoek" })
-  return new Date(namibiaString)
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone: "Africa/Windhoek",
+    hour12: false,
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric"
+  }).formatToParts(now)
+
+  let hours = 0, minutes = 0, seconds = 0
+  parts.forEach(part => {
+    if (part.type === 'hour') hours = parseInt(part.value)
+    if (part.type === 'minute') minutes = parseInt(part.value)
+    if (part.type === 'second') seconds = parseInt(part.value)
+  })
+
+  const ms = now.getMilliseconds()
+  return { hours, minutes, seconds, ms }
 }
 
+// Update clock hands
 const updateClock = () => {
-  const now = getNamibiaTime()
-  const hours = now.getHours()
-  const minutes = now.getMinutes()
-  const seconds = now.getSeconds()
-  const ms = now.getMilliseconds()
-
+  const { hours, minutes, seconds, ms } = getNamibiaTime()
   const smoothSeconds = seconds + ms / 1000
 
   hourDeg.value = (hours % 12) * 30 + (minutes / 60) * 30
@@ -49,7 +61,7 @@ const updateClock = () => {
 
 onMounted(() => {
   updateClock()
-  setInterval(updateClock, 50)
+  setInterval(updateClock, 50) // smooth movement
 })
 </script>
 
@@ -64,7 +76,7 @@ onMounted(() => {
         </div>
 
         <div class="cart">
-          <ShoppingCart size="50" color="#fff" />
+          <ShoppingCart size="30" color="#fff" />
         </div>
       </div>
     </div>
@@ -91,6 +103,7 @@ onMounted(() => {
 .main {
   position: relative;
   height: 100vh;
+  width: 100%;
   background-color: white;
 }
 
@@ -118,30 +131,29 @@ onMounted(() => {
   z-index: 10;
 }
 
-/* ===== MESSAGE BOX ===== */
 .message-box {
   border: 1px solid white;
-  padding: 8px 30px;
-  width: 100%;
+  padding: 0.5rem 1rem;
   border-radius: 10px;
   box-shadow: white 1px 2px;
+  max-width: 100%;
 }
 
 .message {
   font-family: "Montserrat", sans-serif;
-  font-weight: 400; /* normal weight */
+  font-weight: 400;
   text-align: justify;
   letter-spacing: 1px;
-  line-height: 2;
-  font-size: 10px;
+  line-height: 1.5;
   color: white;
+  font-size: clamp(0.7rem, 1vw, 1rem);
 }
 
-/* ===== CART ICON ===== */
+/* CART ICON */
 .cart {
   border: 1px solid white;
-  border-radius: 50%;
   padding: 15px;
+  border-radius: 50%;
   width: 30px;
   height: 30px;
   display: flex;
@@ -163,35 +175,7 @@ onMounted(() => {
   z-index: 0;
 }
 
-/* ===== TEXT CONTENT ===== */
-.content {
-  position: relative;
-  z-index: 5;
-  padding: 50px 120px;
-  height: 70vh;
-}
-
-.name {
-  font-family: "Playfair Display", serif;
-  font-weight: 400; /* light / normal */
-  font-size: 64px;
-  padding-top: 5%;
-  line-height: 1.1;
-  letter-spacing: 0.5px;
-  color: white;
-}
-
-.title {
-  font-family: "Montserrat", sans-serif;
-  font-weight: 400;
-  font-size: 30px;
-  padding-left: 23%;
-  letter-spacing: 1px;
-  line-height: 1.1;
-  color: white;
-}
-
-/* ===== CLOCK CENTER DOT ===== */
+/* CLOCK CENTER DOT */
 .center-dot {
   position: absolute;
   top: 50%;
@@ -204,16 +188,13 @@ onMounted(() => {
   z-index: 10;
 }
 
-/* ===== CLOCK HANDS ===== */
+/* CLOCK HANDS */
 .hand {
   position: absolute;
-  width: 50%;
-  height: 2px;
   top: 50%;
   left: 50%;
   transform-origin: left center;
   background-color: #c6c8c7;
-  transition: none;
 }
 
 .hand.hour {
@@ -232,5 +213,67 @@ onMounted(() => {
   width: 18%;
   height: 3px;
   border-radius: 10% 50% 50% 10%;
+}
+
+/* ===== TEXT CONTENT ===== */
+.content {
+  position: relative;
+  z-index: 5;
+  padding: 50px 120px;
+  height: 70vh;
+}
+
+.name {
+  font-family: "Playfair Display", serif;
+  font-weight: 400;
+  font-size: clamp(2rem, 5vw, 4rem);
+  padding-top: 5%;
+  line-height: 1.1;
+  letter-spacing: 0.5px;
+  color: white;
+}
+
+.title {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  font-size: clamp(1rem, 2.5vw, 2rem);
+  padding-left: 23%;
+  letter-spacing: 1px;
+  line-height: 1.1;
+  color: white;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+  .color-figure {
+    width: 45%;
+  }
+  .hero-image {
+    width: 55%;
+  }
+}
+
+@media (max-width: 768px) {
+  .color-figure {
+    width: 100%;
+    height: 50vh;
+  }
+  .hero-image {
+    width: 100%;
+    height: 50vh;
+  }
+  .content {
+    padding: 1rem 2rem;
+  }
+  .title {
+    padding-left: 0;
+  }
+  .cart {
+    width: 40px;
+    height: 40px;
+  }
+  .left-bottom {
+    gap: 1rem;
+  }
 }
 </style>
