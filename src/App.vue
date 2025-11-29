@@ -167,6 +167,7 @@ html, body {
   align-items: center;
   justify-content: center;
   z-index: 10;
+   transition: transform 0.25s ease-in-out; /* smooth animation */
 }
 
 /* ================= RIGHT HERO IMAGE + CLOCK ================ */
@@ -242,17 +243,78 @@ html, body {
   padding-left: 23%;
   color: white;
 }
+.cart:hover {
+  transform: scale(1.25); /* zoom-in on hover */
+}
 
 /* ================= RESPONSIVE ================== */
 
 /* -------- Tablets -------- */
 @media (max-width: 1024px) {
+
+  .main {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    padding: 0;
+    margin: 0;
+    
+  }
+  .message-box{
+     gap: 4rem;
+     margin-bottom: 1rem;
+  }
+  .cart{
+    margin-top: 2rem;
+     transition: transform 0.25s ease-in-out; /* smooth animation */
+  }
+
+  /* Blue section on top */
   .color-figure {
-    width: 45%;
+        position: relative;
+    width: 100%;
+    height: 50vh; /* slightly bigger for balance */
+    margin: 0;
+    padding: 0;
   }
+
+  /* IMAGE NOW APPEARS ! */
   .hero-image {
-    width: 55%;
+   position: relative;
+    width: 100%;
+    height: 65vh;
+    margin: 0;
+    padding: 0;
+    background-size: cover;
+    background-position: center;
   }
+
+  /* Text content */
+  .content {
+     position: absolute;
+    top: 0;
+    width: 50%;
+    z-index: 20; /* bring title + name to front */
+    text-align: center;
+    
+  }
+   .name {
+    color: white;
+    
+  }
+
+  .title {
+    color: white;
+    padding-left: 0;
+  }
+
+  .left-bottom {
+    bottom: 20px;
+    gap: 4rem;
+  }
+  .cart:hover {
+  transform: scale(1.25); /* zoom-in on hover */
+}
 }
 
 /* -------- Mobile Phones -------- */
@@ -263,6 +325,9 @@ html, body {
     height: 100vh;
     padding: 0;
     margin: 0;
+  }
+  .message-box{
+    width: 100%;
   }
 
   /* Blue section on top */
@@ -306,6 +371,15 @@ html, body {
     bottom: 20px;
     gap: 1rem;
   }
+  
+  .cart{
+    margin-top: 1rem;
+     transition: transform 0.25s ease-in-out; /* smooth animation */
+  }
+  .cart:hover {
+  transform: scale(1.25); /* zoom-in on hover */
+}
+
 }
 
 </style>
