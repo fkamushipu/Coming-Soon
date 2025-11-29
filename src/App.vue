@@ -99,15 +99,24 @@ onMounted(() => {
 </template>
 
 <style scoped>
-/* ===== MAIN ===== */
+/* ================= GLOBAL FIX ================ */
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* REMOVE SCROLLBAR */
+  height: 100%;
+}
+
+/* ================= MAIN WRAPPER ================ */
 .main {
   position: relative;
   height: 100vh;
-  width: 100%;
+  width: 100vw;
+  overflow: hidden;
   background-color: white;
 }
 
-/* ===== LEFT SIDE BACKGROUND ===== */
+/* ================= LEFT BLUE SIDE ================ */
 .color-figure {
   position: absolute;
   top: 0;
@@ -118,7 +127,7 @@ onMounted(() => {
   z-index: 1;
 }
 
-/* ===== BOTTOM-CENTER BOX (MESSAGE + CART) ===== */
+/* ================= BOTTOM CONTENT ON BLUE SIDE ================ */
 .left-bottom {
   position: absolute;
   bottom: 40px;
@@ -127,7 +136,7 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 50px; /* space between message and cart */
+  gap: 50px;
   z-index: 10;
 }
 
@@ -143,8 +152,6 @@ onMounted(() => {
   font-family: "Montserrat", sans-serif;
   font-weight: 400;
   text-align: justify;
-  letter-spacing: 1px;
-  line-height: 1.5;
   color: white;
   font-size: clamp(0.7rem, 1vw, 1rem);
 }
@@ -162,7 +169,7 @@ onMounted(() => {
   z-index: 10;
 }
 
-/* ===== RIGHT IMAGE + CLOCK ===== */
+/* ================= RIGHT HERO IMAGE + CLOCK ================ */
 .hero-image {
   position: absolute;
   top: 0;
@@ -175,7 +182,7 @@ onMounted(() => {
   z-index: 0;
 }
 
-/* CLOCK CENTER DOT */
+/* CLOCK DOT */
 .center-dot {
   position: absolute;
   top: 50%;
@@ -200,22 +207,19 @@ onMounted(() => {
 .hand.hour {
   width: 12%;
   height: 5px;
-  border-radius: 10% 30% 30% 10%;
 }
 
 .hand.minute {
   width: 15%;
   height: 4px;
-  border-radius: 10% 50% 50% 10%;
 }
 
 .hand.second {
   width: 18%;
   height: 3px;
-  border-radius: 10% 50% 50% 10%;
 }
 
-/* ===== TEXT CONTENT ===== */
+/* ================= TITLE + NAME ================== */
 .content {
   position: relative;
   z-index: 5;
@@ -228,22 +232,20 @@ onMounted(() => {
   font-weight: 400;
   font-size: clamp(2rem, 5vw, 4rem);
   padding-top: 5%;
-  line-height: 1.1;
-  letter-spacing: 0.5px;
   color: white;
 }
 
 .title {
   font-family: "Montserrat", sans-serif;
-  font-weight: 400;
+  font-weight: 300;
   font-size: clamp(1rem, 2.5vw, 2rem);
   padding-left: 23%;
-  letter-spacing: 1px;
-  line-height: 1.1;
   color: white;
 }
 
-/* ===== RESPONSIVE ===== */
+/* ================= RESPONSIVE ================== */
+
+/* -------- Tablets -------- */
 @media (max-width: 1024px) {
   .color-figure {
     width: 45%;
@@ -253,27 +255,57 @@ onMounted(() => {
   }
 }
 
+/* -------- Mobile Phones -------- */
 @media (max-width: 768px) {
+  .main {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    padding: 0;
+    margin: 0;
+  }
+
+  /* Blue section on top */
   .color-figure {
+        position: relative;
     width: 100%;
-    height: 50vh;
+    height: 50vh; /* slightly bigger for balance */
+    margin: 0;
+    padding: 0;
   }
+
+  /* IMAGE NOW APPEARS ! */
   .hero-image {
+   position: relative;
     width: 100%;
-    height: 50vh;
+    height: 65vh;
+    margin: 0;
+    padding: 0;
+    background-size: cover;
+    background-position: center;
   }
+
+  /* Text content */
   .content {
-    padding: 1rem 2rem;
+     position: absolute;
+    top: 0;
+    width: 50%;
+    z-index: 20; /* bring title + name to front */
+    text-align: center;
   }
+   .name {
+    color: white;
+  }
+
   .title {
+    color: white;
     padding-left: 0;
   }
-  .cart {
-    width: 40px;
-    height: 40px;
-  }
+
   .left-bottom {
+    bottom: 20px;
     gap: 1rem;
   }
 }
+
 </style>
