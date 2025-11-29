@@ -119,7 +119,7 @@ body {
 /* ================= BOTTOM CONTENT ON BLUE SIDE ================ */
 .left-bottom {
   position: absolute;
-  bottom: 40px;
+  bottom: 100px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
