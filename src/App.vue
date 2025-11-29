@@ -27,31 +27,20 @@ const hourDeg = ref(0)
 const minuteDeg = ref(0)
 const secondDeg = ref(0)
 
-// Get Namibia time reliably
-const getNamibiaTime = () => {
+// Get device time
+function getDeviceTime() {
   const now = new Date()
-  const parts = new Intl.DateTimeFormat("en-US", {
-    timeZone: "Africa/Windhoek",
-    hour12: false,
-    hour: "numeric",
-    minute: "numeric",
-    second: "numeric"
-  }).formatToParts(now)
-
-  let hours = 0, minutes = 0, seconds = 0
-  parts.forEach(part => {
-    if (part.type === 'hour') hours = parseInt(part.value)
-    if (part.type === 'minute') minutes = parseInt(part.value)
-    if (part.type === 'second') seconds = parseInt(part.value)
-  })
-
-  const ms = now.getMilliseconds()
-  return { hours, minutes, seconds, ms }
+  return {
+    hours: now.getHours(),
+    minutes: now.getMinutes(),
+    seconds: now.getSeconds(),
+    ms: now.getMilliseconds()
+  }
 }
 
 // Update clock hands
 const updateClock = () => {
-  const { hours, minutes, seconds, ms } = getNamibiaTime()
+  const { hours, minutes, seconds, ms } = getDeviceTime()
   const smoothSeconds = seconds + ms / 1000
 
   hourDeg.value = (hours % 12) * 30 + (minutes / 60) * 30
@@ -64,6 +53,7 @@ onMounted(() => {
   setInterval(updateClock, 50) // smooth movement
 })
 </script>
+
 
 <template>
   <div class="main">
