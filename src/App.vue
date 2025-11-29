@@ -6,7 +6,7 @@ const companyName = ref('Amelia Aura')
 const fullTitle = 'Coming Soon ... '
 const title = ref('')
 const message = ref(
-  'Timeless watches and elegant jewelry curated for your unique style. Crafted with love, delivered with care.'
+  'Timeless watches and elegant jewelry curated for your unique style. Crafted with love, delivered with care.',
 )
 
 // Typewriter animation
@@ -22,42 +22,41 @@ onMounted(() => {
   }, 600)
 })
 
-// Clock hands
+// Clock degrees
 const hourDeg = ref(0)
 const minuteDeg = ref(0)
 const secondDeg = ref(0)
 
-// Get device time
+// Read device time
 function getDeviceTime() {
   const now = new Date()
   return {
     hours: now.getHours(),
     minutes: now.getMinutes(),
     seconds: now.getSeconds(),
-    ms: now.getMilliseconds()
+    ms: now.getMilliseconds(),
   }
 }
 
-// Update clock hands
 const updateClock = () => {
   const { hours, minutes, seconds, ms } = getDeviceTime()
   const smoothSeconds = seconds + ms / 1000
+  const smoothMinutes = minutes + smoothSeconds / 60
 
-  hourDeg.value = (hours % 12) * 30 + (minutes / 60) * 30
-  minuteDeg.value = minutes * 6 + (smoothSeconds / 60) * 6
+  // FORMULAS
+  hourDeg.value = (hours % 12) * 30 + smoothMinutes * 0.5
+  minuteDeg.value = smoothMinutes * 6
   secondDeg.value = smoothSeconds * 6
 }
 
 onMounted(() => {
   updateClock()
-  setInterval(updateClock, 50) // smooth movement
+  setInterval(updateClock, 50)
 })
 </script>
 
-
 <template>
   <div class="main">
-
     <!-- LEFT BLUE SIDE -->
     <div class="color-figure">
       <div class="left-bottom">
@@ -74,9 +73,9 @@ onMounted(() => {
     <!-- RIGHT IMAGE + CLOCK -->
     <div class="hero-image">
       <div class="center-dot"></div>
-      <div class="hand hour" :style="{ transform: `rotate(${hourDeg}deg)` }"></div>
-      <div class="hand minute" :style="{ transform: `rotate(${minuteDeg}deg)` }"></div>
-      <div class="hand second" :style="{ transform: `rotate(${secondDeg}deg)` }"></div>
+      <div class="hand hour" :style="{ transform: `rotate(${hourDeg - 90}deg)` }"></div>
+      <div class="hand minute" :style="{ transform: `rotate(${minuteDeg - 90}deg)` }"></div>
+      <div class="hand second" :style="{ transform: `rotate(${secondDeg - 90}deg)` }"></div>
     </div>
 
     <!-- TOP LEFT CONTENT -->
@@ -84,13 +83,13 @@ onMounted(() => {
       <div class="name">{{ companyName }}</div>
       <div class="title">{{ title }}</div>
     </div>
-
   </div>
 </template>
 
 <style scoped>
 /* ================= GLOBAL FIX ================ */
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   overflow: hidden; /* REMOVE SCROLLBAR */
@@ -139,7 +138,7 @@ html, body {
 }
 
 .message {
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-weight: 400;
   text-align: justify;
   color: white;
@@ -157,7 +156,7 @@ html, body {
   align-items: center;
   justify-content: center;
   z-index: 10;
-   transition: transform 0.25s ease-in-out; /* smooth animation */
+  transition: transform 0.25s ease-in-out; /* smooth animation */
 }
 
 /* ================= RIGHT HERO IMAGE + CLOCK ================ */
@@ -191,7 +190,7 @@ html, body {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform-origin: left center;
+  transform-origin: 0% 50%; /* rotate from center */
   background-color: #c6c8c7;
 }
 
@@ -219,7 +218,7 @@ html, body {
 }
 
 .name {
-  font-family: "Playfair Display", serif;
+  font-family: 'Playfair Display', serif;
   font-weight: 400;
   font-size: clamp(2rem, 5vw, 4rem);
   padding-top: 5%;
@@ -227,7 +226,7 @@ html, body {
 }
 
 .title {
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-weight: 300;
   font-size: clamp(1rem, 2.5vw, 2rem);
   padding-left: 23%;
@@ -241,27 +240,25 @@ html, body {
 
 /* -------- Tablets -------- */
 @media (max-width: 1024px) {
-
   .main {
     display: flex;
     flex-direction: column;
     height: 100vh;
     padding: 0;
     margin: 0;
-    
   }
-  .message-box{
-     gap: 4rem;
-     margin-bottom: 1rem;
+  .message-box {
+    gap: 4rem;
+    margin-bottom: 1rem;
   }
-  .cart{
+  .cart {
     margin-top: 2rem;
-     transition: transform 0.25s ease-in-out; /* smooth animation */
+    transition: transform 0.25s ease-in-out; /* smooth animation */
   }
 
   /* Blue section on top */
   .color-figure {
-        position: relative;
+    position: relative;
     width: 100%;
     height: 50vh; /* slightly bigger for balance */
     margin: 0;
@@ -270,7 +267,7 @@ html, body {
 
   /* IMAGE NOW APPEARS ! */
   .hero-image {
-   position: relative;
+    position: relative;
     width: 100%;
     height: 65vh;
     margin: 0;
@@ -281,16 +278,14 @@ html, body {
 
   /* Text content */
   .content {
-     position: absolute;
+    position: absolute;
     top: 0;
     width: 50%;
     z-index: 20; /* bring title + name to front */
     text-align: center;
-    
   }
-   .name {
+  .name {
     color: white;
-    
   }
 
   .title {
@@ -303,8 +298,8 @@ html, body {
     gap: 4rem;
   }
   .cart:hover {
-  transform: scale(1.25); /* zoom-in on hover */
-}
+    transform: scale(1.25); /* zoom-in on hover */
+  }
 }
 
 /* -------- Mobile Phones -------- */
@@ -316,13 +311,13 @@ html, body {
     padding: 0;
     margin: 0;
   }
-  .message-box{
+  .message-box {
     width: 100%;
   }
 
   /* Blue section on top */
   .color-figure {
-        position: relative;
+    position: relative;
     width: 100%;
     height: 50vh; /* slightly bigger for balance */
     margin: 0;
@@ -331,7 +326,7 @@ html, body {
 
   /* IMAGE NOW APPEARS ! */
   .hero-image {
-   position: relative;
+    position: relative;
     width: 100%;
     height: 65vh;
     margin: 0;
@@ -342,13 +337,13 @@ html, body {
 
   /* Text content */
   .content {
-     position: absolute;
+    position: absolute;
     top: 0;
     width: 50%;
     z-index: 20; /* bring title + name to front */
     text-align: center;
   }
-   .name {
+  .name {
     color: white;
   }
 
@@ -361,15 +356,13 @@ html, body {
     bottom: 20px;
     gap: 1rem;
   }
-  
-  .cart{
+
+  .cart {
     margin-top: 1rem;
-     transition: transform 0.25s ease-in-out; /* smooth animation */
+    transition: transform 0.25s ease-in-out; /* smooth animation */
   }
   .cart:hover {
-  transform: scale(1.25); /* zoom-in on hover */
+    transform: scale(1.25); /* zoom-in on hover */
+  }
 }
-
-}
-
 </style>
