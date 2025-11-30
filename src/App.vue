@@ -55,6 +55,8 @@ onMounted(() => {
 })
 </script>
 
+// ================= MAIN APP TEMPLATE ==================
+
 <template>
   <div class="main">
     <!-- LEFT BLUE SIDE -->
@@ -86,6 +88,7 @@ onMounted(() => {
   </div>
 </template>
 
+// CSS FOR THE TEMPLATE
 <style scoped>
 
 /*  MAIN WRAPPER */
