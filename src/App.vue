@@ -125,7 +125,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 150px;
+  gap: 50px;
   z-index: 10;
 }
 
