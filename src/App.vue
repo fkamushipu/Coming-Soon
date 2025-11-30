@@ -87,25 +87,19 @@ onMounted(() => {
 </template>
 
 <style scoped>
-/* ================= GLOBAL FIX ================ */
-html,
-body {
-  margin: 0;
-  padding: 0;
-  overflow: hidden; /* REMOVE SCROLLBAR */
-  height: 100%;
-}
 
-/* ================= MAIN WRAPPER ================ */
+/*  MAIN WRAPPER */
 .main {
   position: relative;
   height: 100vh;
   width: 100vw;
+    margin: 0;
+  padding: 0;
   overflow: hidden;
   background-color: white;
 }
 
-/* ================= LEFT BLUE SIDE ================ */
+/* LEFT BLUE SIDE */
 .color-figure {
   position: absolute;
   top: 0;
@@ -116,7 +110,7 @@ body {
   z-index: 1;
 }
 
-/* ================= BOTTOM CONTENT ON BLUE SIDE ================ */
+/*  BOTTOM CONTENT ON BLUE SIDE - THE CART AND MESSAGE*/
 .left-bottom {
   position: absolute;
   bottom: 100px;
@@ -156,10 +150,10 @@ body {
   align-items: center;
   justify-content: center;
   z-index: 10;
-  transition: transform 0.25s ease-in-out; /* smooth animation */
+  transition: transform 0.25s ease-in-out;
 }
 
-/* ================= RIGHT HERO IMAGE + CLOCK ================ */
+/* RIGHT HERO IMAGE + REALTIME CLOCK  */
 .hero-image {
   position: absolute;
   top: 0;
@@ -190,7 +184,7 @@ body {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform-origin: 0% 50%; /* rotate from center */
+  transform-origin: 0% 50%; 
   background-color: #c6c8c7;
 }
 
@@ -209,7 +203,7 @@ body {
   height: 3px;
 }
 
-/* ================= TITLE + NAME ================== */
+/*  TITLE + NAME  CONTENT */
 .content {
   position: relative;
   z-index: 5;
@@ -233,10 +227,10 @@ body {
   color: white;
 }
 .cart:hover {
-  transform: scale(1.25); /* zoom-in on hover */
+  transform: scale(1.25);
 }
 
-/* ================= RESPONSIVE ================== */
+/* ================= RESPONSIVE FOR OTHER DEVICES PHONE AND TABLETS ================== */
 
 /* -------- Tablets -------- */
 @media (max-width: 1024px) {
@@ -253,19 +247,19 @@ body {
   }
   .cart {
     margin-top: 2rem;
-    transition: transform 0.25s ease-in-out; /* smooth animation */
+    transition: transform 0.25s ease-in-out; 
+    
   }
 
-  /* Blue section on top */
+  /* Blue section on top in tablet screens */
   .color-figure {
     position: relative;
     width: 100%;
-    height: 50vh; /* slightly bigger for balance */
+    height: 50vh; 
     margin: 0;
     padding: 0;
   }
 
-  /* IMAGE NOW APPEARS ! */
   .hero-image {
     position: relative;
     width: 100%;
@@ -281,7 +275,7 @@ body {
     position: absolute;
     top: 0;
     width: 50%;
-    z-index: 20; /* bring title + name to front */
+    z-index: 20;
     text-align: center;
   }
   .name {
@@ -297,12 +291,13 @@ body {
     bottom: 20px;
     gap: 4rem;
   }
+  /* Zoom the cart on hover */
   .cart:hover {
-    transform: scale(1.25); /* zoom-in on hover */
+    transform: scale(1.25); 
   }
 }
 
-/* -------- Mobile Phones -------- */
+/* -------- Mobile Phones Responsive -------- */
 @media (max-width: 768px) {
   .main {
     display: flex;
@@ -315,16 +310,15 @@ body {
     width: 100%;
   }
 
-  /* Blue section on top */
+  /* Blue section on top on mobile devices */
   .color-figure {
     position: relative;
     width: 100%;
-    height: 50vh; /* slightly bigger for balance */
+    height: 50vh; 
     margin: 0;
     padding: 0;
   }
 
-  /* IMAGE NOW APPEARS ! */
   .hero-image {
     position: relative;
     width: 100%;
@@ -335,12 +329,12 @@ body {
     background-position: center;
   }
 
-  /* Text content */
+  /* Text paragraph content */
   .content {
     position: absolute;
     top: 0;
     width: 50%;
-    z-index: 20; /* bring title + name to front */
+    z-index: 20; 
     text-align: center;
   }
   .name {
@@ -359,10 +353,10 @@ body {
 
   .cart {
     margin-top: 1rem;
-    transition: transform 0.25s ease-in-out; /* smooth animation */
+    transition: transform 0.25s ease-in-out; 
   }
   .cart:hover {
-    transform: scale(1.25); /* zoom-in on hover */
+    transform: scale(1.25); 
   }
 }
 </style>
